@@ -1,0 +1,10 @@
+[Unit]
+Description=Move and free the T-Rex !
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /home/pi/breizhcamp_2023/breizhcamp.py
+
+[Install]
+WantedBy=multi-user.target

@@ -11,6 +11,7 @@ from time import sleep
 pir = MotionSensor(4, queue_len=10)
 
 ready_button = Button(17)
+manual_grooar_button = Button(12)
 
 # Chemin vers le répertoire contenant les fichiers son
 tracks_directory = "/home/pi/breizhcamp_2023/tracks"
@@ -46,10 +47,22 @@ def led_thread():
                 yellow.off()
         except KeyboardInterrupt:
             break
-    
+
+def manual_grooar_thread():
+    print('manual_grooar_thread démarré ...')
+    while True:
+        try:
+            manual_grooar_button.wait_for_press()
+            print('Lancement manuel')
+            trex_groaaar_sound()
+        except KeyboardInterrupt:
+            break
+
 led_thread = threading.Thread(target=led_thread)
+manual_grooar_thread = threading.Thread(target=manual_grooar_thread)
 # Lancement du thread
 led_thread.start()
+manual_grooar_thread.start()
 
 # fonction de test
 def trex_groaaar():
@@ -72,22 +85,15 @@ def trex_groaaar_sound():
         
         # Arrêt de la lecture
         media_player.stop()
-        print("media stop")
+        print("Arret du média")
 
-def wait_for_ready():
-    print('Reaaaady ?')
-    while True:
-        try:
-            ready_button.wait_for_press()
-            print('Go')
-            break
-        except KeyboardInterrupt:
-            break
 try:
     while True:
-        wait_for_ready()
+        print('Reaaaady ?')
+        ready_button.wait_for_press()
+        print('Go')
         led_running = True
-        print("Sleep 5 sec pdt la question.")
+        print("Sleep 5 sec")
         sleep(5)
         print("En attente de mouvement ...")
         pir.wait_for_motion()
