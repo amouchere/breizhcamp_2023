@@ -31,20 +31,28 @@ media_player = vlc_instance.media_player_new()
 led_running = False
 
 def led_thread():
-    red = LED(21)
-    yellow = LED(20)
+    orange = LED(21)
+    orange2 = LED(24)
+    blue = LED(20)
+    blue2 = LED(23)
     while True:
         try:
             if (led_running):
-                red.on()
-                yellow.off()
+                orange.on()
+                orange2.on()
+                blue.off()
+                blue2.off()
                 sleep(1)
-                red.off()
-                yellow.on()
+                orange.off()
+                orange2.off()
+                blue.on()
+                blue2.on()
                 sleep(1)
             else:
-                red.off()
-                yellow.off()
+                orange.off()
+                orange2.off()
+                blue.off()
+                blue2.off()
         except KeyboardInterrupt:
             break
 
